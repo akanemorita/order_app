@@ -1,0 +1,39 @@
+= form_for(@order, url: orders_path) do |f|
+	.md-table01-box-inner
+	    .md-table01-body-wrap.ex-gray
+	      table
+	        thead
+	          tr
+	            th.ex-width-40
+	              | 商品名
+	            th.ex-width-30
+	              | 単価
+	            th.ex-width-30
+	              | 数量
+	            th.ex-width-24-fix
+	    .md-table01-body-wrap
+		       table#product_list.resources_data_list
+		        tbody
+					= f.fields_for :order_details, @order.order_details.build do |od|
+	            		= render 'order_detail_fields', f:od
+		.md-table01-box-inner.no-border.text-right
+		    = link_to_add_association "商品を追加", f, :order_details, class: 'btn btn-add',data: { association_insertion_node: "#product_list",association_insertion_method: "append" }
+
+	.md-table01-box-inner
+        table.md-table01-single
+          thead
+            tr
+              th
+                | 送料
+          tbody
+            tr#md-restaurant-postage
+              td.postage-field
+                = f.text_field :postage, class: "form-control postage"
+	.md-table01-box-inner.no-border
+		label 発注額合計
+  		= f.text_field :price, class: 'form-control total', disabled: true, value: number_to_currency(f.object.price, :unit => "¥")
+
+
+
+	.md-table01-box-inner
+		= f.submit yield(:button_text), class: "btn btn-primary"

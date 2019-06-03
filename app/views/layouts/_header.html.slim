@@ -1,0 +1,9 @@
+header.navbar.navbar-fixed-top.navbar-inverse
+  .container
+    = link_to "簡易注文システム_(:3」∠)_", root_path, id: "logo"
+    nav
+      ul.nav.navbar-nav.navbar-right
+        li
+          = link_to "注文書一覧", purchase_orders_path
+        li
+          = link_to "請求書一覧", invoices_path
