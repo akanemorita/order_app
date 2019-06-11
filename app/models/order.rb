@@ -4,9 +4,12 @@ class Order < ActiveRecord::Base
 	before_create :set_tax_price
 	before_create :set_total_price
 
+	#after_create :update_price
+
 	before_update :calculate_order_price
 	#after_update :update_price, :update_postage_price, :update_tax_price, on: :update
-	after_update :update_postage_price, :update_tax_price, :update_total_price, on: :update
+	# 削除する時の合計金額の計算が怪しい！！！！
+	after_update :update_price, :update_postage_price, :update_tax_price, :update_total_price, on: :update
 
 	belongs_to :company
 	has_many :order_details, dependent: :destroy
@@ -16,7 +19,7 @@ class Order < ActiveRecord::Base
 
 	ORDER_HISTORY_PARAMS = [:name, :postage, :company_id, :invoice_id, order_details_attributes: [:id, :order_id, :product_name, :quantity, :_destroy, :unit_price]]
 
-	SUPPLIER_UPDATE_PARAMS = [:is_public, :postage, :created_at, :company_id, :tax_price, :price, :delivery_at, order_details_attributes: [:id, :product_name, :_destroy, :unit_price, :quantity]]
+	SUPPLIER_UPDATE_PARAMS = [:is_public, :postage, :created_at, :company_id, :price, :tax_price, :delivery_at, order_details_attributes: [:id, :product_name, :_destroy, :unit_price, :quantity]]
 
     UPDATE_ORDER_STATUS = [:order_status,:updated_at]
 
@@ -67,8 +70,8 @@ class Order < ActiveRecord::Base
 
 
 	def update_price
-	    price = order_details.sum(:price)
-	    update_columns price: price
+	    #price = order_details.sum(:price)
+	    update_columns price: self.price
 	end
 
 	def update_postage_price
