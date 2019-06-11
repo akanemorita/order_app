@@ -10,7 +10,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_03_045805) do
+ActiveRecord::Schema.define(version: 2019_06_06_081321) do
+
+  create_table "companies", force: :cascade do |t|
+    t.string "name"
+    t.string "zipcode1"
+    t.string "zipcode2"
+    t.string "state"
+    t.string "city"
+    t.string "address"
+    t.string "address2"
+    t.string "tel"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "invoice_details", force: :cascade do |t|
+    t.string "product_name"
+    t.integer "unit_price"
+    t.integer "quantity"
+    t.integer "price"
+    t.integer "tax_price"
+    t.integer "invoice_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "invoices", force: :cascade do |t|
+    t.string "invoice_code"
+    t.integer "price"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "tax_price"
+    t.integer "company_id"
+  end
 
   create_table "order_details", force: :cascade do |t|
     t.integer "order_id"
@@ -19,6 +54,8 @@ ActiveRecord::Schema.define(version: 2019_06_03_045805) do
     t.integer "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.integer "price"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -28,6 +65,15 @@ ActiveRecord::Schema.define(version: 2019_06_03_045805) do
     t.datetime "updated_at", null: false
     t.integer "price"
     t.integer "postage"
+    t.string "deleted_at"
+    t.string "datetime"
+    t.string "name"
+    t.string "string"
+    t.integer "tax_price"
+    t.integer "company_id"
+    t.integer "total_price"
+    t.datetime "delivery_at"
+    t.integer "invoice_id"
   end
 
 end

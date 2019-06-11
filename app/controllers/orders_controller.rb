@@ -1,12 +1,6 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:edit, :update]
 
   def index
-
-  end
-
-  # 注文書一覧
-  def list
     @orders = Order.paginate(page: params[:page], per_page: 20)
   end
 
@@ -18,11 +12,6 @@ class OrdersController < ApplicationController
   	@order =  Order.new
   end
 
-  # 注文書：編集する
-  def edit
-    @order = Order.find(params[:id])
-  end
-
   # 発注書作成
   def create
   	# input data
@@ -30,39 +19,37 @@ class OrdersController < ApplicationController
   	# 保存
   	if @order.save
   		#success
-      flash[:info] = "発注書を作成したよ！"
-  		redirect to orders_path
+      flash[:success] = "発注書を作成したよ！注文一覧を確認してみてね！"
+  		redirect_to new_order_path
   	else
   		#falied
-  		render 'new'
+  		render :new
   	end
   end
 
-
-  # 注文書：更新する
+  # 配送状況の更新
   def update
-    if @order.update_attributes(order_params)
-      redirect_to orders_path, notice: "受注 #{@order.name} を更新しました。"
-    else
-      render :edit
+    @order = Order.find_by id: params[:id]
+    respond_to do |format|
+      if @order.update params[:orders][:order_status]
+      #if @order.public_send params[:orders][:order_status]
+        format.json do
+          render json: {id: @order.id, order_status: @order.order_status, selectbox: @order.select_order_status}
+        end
+      else
+        format.json{render json: {errors: @order.errors.full_messages}}
+      end
     end
   end
-
-  # 注文書：削除する
-  def destroy
-    Order.find(params[:id]).destroy
-    redirect_to orders_url, notice: '受注を削除しました。'
-  end
-
 
   private
 
-    def set_order
-      @order = Form::Order.find(params[:id])
+    def order_params
+      params.require(:order).permit(Order::ORDER_HISTORY_PARAMS).merge order_status: "not_deliver", is_public: true
     end
 
-    def order_params
-      params.require(:order).permit(:product_name,:unit_price,:quantity)
+    def status_params
+      params.require(:order).permit(Order::UPDATE_ORDER_STATUS)
     end
 
 end

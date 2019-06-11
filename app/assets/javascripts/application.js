@@ -13,10 +13,13 @@
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
-//= require_tree .
 //= require jquery
 //= require jquery_ujs
-//= require order
+//= require jquery-ui/widgets/datepicker
+//= require jquery-ui/i18n/datepicker-ja
+//= require magnific-popup
+//= require update_shipment_status.js
+//= require_tree .
 //= require cocoon
 //= require bootstrap
 

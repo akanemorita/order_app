@@ -1,0 +1,10 @@
+- @purchase_orders.each do |order_history|
+  li.-purchaseOrderHistory#purchase_order_list data-order-id="#{order_history.id}" data-href="purchase_orders/#{order_history.id}" data-order-code="#{order_history.id}" class="o-table__head__flex"
+    .o-table__data__flex
+      | ##{order_history.id}
+    .o-table__data__flex
+      = order_history.created_at.strftime('%Y/%m/%d %H:%M')
+    .o-table__data__flex = order_history.company.name
+    .o-table__data__flex = order_history.name
+    .o-table__data__flex
+      | &yen#{number_with_delimiter order_history.total_price}

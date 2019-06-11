@@ -1,0 +1,35 @@
+
+section.invoice-index
+
+	.o-table
+	- if @invoices.any?
+      	.o-table__inner
+          	ul.no-padding-mergin
+	            li.o-table__head__flex
+	              .o-table__invoiceLabel 請求番号
+	              .o-table__invoiceLabel 取引先名
+	              .o-table__invoiceLabel
+	                = "注文金額(税込)"
+	              .o-table__invoiceLabel 注文数
+	              .o-table__invoiceLabel 発行日
+	              .o-table__invoiceLabel 支払期限
+				.resources_data_list
+					= render "invoice_detail"
+	- else
+      	.o-table__blank
+        	h2 請求書がないよ！
+        	p まずは発注書を作成してみようね！
+
+
+
+javascript:
+	$(function() {
+
+	    $(this).find('li').click( function() {
+	    	var href_link = $(this).attr('id');
+	    	if (href_link == 'invoice_list') {
+				window.location = $(this).attr('data-href');
+	    	}
+	    });
+
+	});

@@ -1,0 +1,239 @@
+- can_edit_order = 1
+
+- provide(:title, "注文詳細")
+
+h1 注文詳細
+
+.row
+	section
+	  .o-tableDetail.p-detail#fn-supplier-edit-order data-restaurant-id="#{@order_history.company_id}" data-order-id="#{@order_history.id}" data-status="#{@order_history.order_status}"
+	  	= form_for @order_history, url: purchase_order_path(@order_history), html: {id: "form_order_history"}, remote: true do |f|
+	      .o-tableDetail__head
+	        .m-headRight
+	          ul
+	              li.right
+	                span#edit-purchase-order 編集する
+	        .m-headLeft.return
+	        	= fa_icon "angle-double-left"
+	          	= link_to "一覧へ戻る", purchase_orders_path
+
+	      .o-tableDetail__box#js-show-history-header
+	        table
+	          tbody
+	            tr
+	              th
+	                | 注文日
+	              td
+	                | #{l @order_history.created_at}
+	            tr
+	              th
+	                | 納品希望日
+	              td#fn-read-deliverdate
+	                - if @order_history.delivery_at
+	                  | #{l @order_history.delivery_at, format: :too_short}
+	                - else
+	                  | 指定なし
+	              td.date-pick#fn-edit-deliverdate style="display: none"
+	                = f.text_field :delivery_at, value: @order_history.delivery_at.nil? ? "指定なし" : (l @order_history.delivery_at),
+	                    class: "datepick mdl-textfield__input md-order-datepick", id: "fn-select-date", readonly: "readonly"
+	            tr
+	              th
+	                | 注文番号
+	              td
+	                | ##{@order_history.id}
+
+	            tr
+	              th
+	                | 注文名称
+	              td
+	                | #{@order_history.name}
+	            /tr
+	              th
+	                | 配送状況
+	              td#fn-edit-order_status-show-page
+	              	span.tableSelect = f.select :order_status, options_for_select(@order_history.select_order_status, @order_history.order_status),
+	                    {}, {id: "fn-supplier-select-order-status"}
+	                /- if (@order_history.invoice.present? && @order_history.invoice.is_send?)
+	                  = @order_history.translated_order_status
+	                /- else
+	                  span.tableSelect = f.select :order_status, options_for_select(@order_history.select_order_status, @order_history.order_status),
+	                    {}, {id: "fn-supplier-select-order-status"}
+	            tr
+	                  th
+	                    | 請求月
+	                  td
+	                    | 2019年6月
+	            tr
+	              th
+	                | 納品先店舗
+	              td
+	                = @order_history.company.name
+	            tr
+	              th
+	                | 納品先住所
+	              td
+	                | 〒#{@order_history.company.zipcode1}-#{@order_history.company.zipcode2}
+	                | #{@order_history.company.state}#{@order_history.company.city}
+	                | #{@order_history.company.address} #{@order_history.company.address2}
+	            tr
+	              th
+	                | 納品先電話番号
+	              td
+	                | #{@order_history.company.tel}
+	      .o-tableDetail__boxInner#order_details_history_list
+	        .wrapper.-gray
+	          table
+	            thead
+	              th.col-2 商品名
+	              th.col-3 単価(税抜)
+	              th.col-3 数量
+	        .wrapper
+	          table.resources_data_list.ex-no-topborder
+	            tbody
+	              - @order_history.order_details.each do |detail|
+	                tr
+	                  td.col-2 = detail.product_name
+	                  td.col-3 &yen#{number_with_delimiter detail.unit_price}
+	                  td.col-3 = detail.quantity
+	      .o-tableDetail__boxInner#order-price
+	        .wrapper
+	          table.-single
+	            thead
+	              tr
+	                th
+	                  | 小計(税抜)
+	                th
+	                  | 送料(税抜)
+	                th
+	                  | 消費税
+	                th
+	                  | 注文金額合計(税込)
+	            tbody
+	              tr
+	                td &yen#{number_with_delimiter @order_history.price}
+	                td
+	                  | &yen#{number_with_delimiter @order_history.postage.to_i}
+	                td &yen#{number_with_delimiter @order_history.tax_price}
+	                td
+	                  | &yen#{number_with_delimiter @order_history.total_price}
+
+	      - if can_edit_order
+	        #edit-purchase-order-history style="display: none;"
+	          .o-tableDetail__boxInner.md-table01-box-inner
+	            /= render "partials/errors_message", resource: @order_history
+	            = render 'shared/error_messages',  object: f.object
+	            = render "form", f: f
+	          .o-tableDetail__boxInner
+	            .wrapper
+	              table.-single.resources_data_list
+	                thead
+	                  tr
+	                    th
+	                      | 小計(税抜)
+	                    th
+	                      | 送料(税抜)
+	                    th
+	                      | 消費税
+	                    th
+	                      | 注文金額合計(税抜)
+	                tbody
+	                  tr
+	                    td &yen#{number_with_delimiter @order_history.price}
+	                    td.postage-field
+	                      = fa_icon "fa-yen-sign"
+	                      = f.text_field :postage, class: "postage"
+	                    td.order-tax-price
+	                      | &yen#{number_with_delimiter @order_history.tax_price.to_i}
+	                      span
+	                    td
+	                      | &yen#{number_with_delimiter @order_history.total_price + (@order_history.postage.to_i * 0.08).to_i}
+
+	      - if can_edit_order
+
+	      	.o-tableSubmit#edit-purchase-order-button style="display: none;"
+	            .o-tableSubmit__recordSubmit
+	              = submit_tag "保存", class: "ex-active-save ex-gold"
+	              = link_to "キャンセル", purchase_orders_path, class: "ex-active-cancel ex-gold"
+	        .o-tableDetail__bottomLink
+	          p.removeButton#fn-remove-button
+	            | 注文を削除する
+	    #fn-confirm-remove.mfp-hide
+	      .o-popUp
+	        p.title
+	        	| 注文を削除してよろしいですか？
+	        .btn
+	          span#confirm_no
+	            p.ex-anwerno いいえ
+	          span#confirm_yes
+	            = link_to "はい", purchase_order_path(@order_history), method: :delete, class: "md-remove-button"
+	    #fn-confirm-update-status-show-page.mfp-hide
+	      .o-popUp#fn-confirm
+	        p.title#popup_text
+	        .btn
+	          span#confirm_no
+	            p.ex-anwerno いいえ
+	          span#confirm_yes
+	            = button_to "はい", order_path(@order_history.id), {form_class: "fn-update-order-status"}
+	      .o-popUp.-shipment#fn-success style="display: none;"
+	        .success
+	          i.fa.fa-check-circle
+	          | 配送状況を変更しました！
+	      .o-popUp.-shipmentul#js-orderErrorFailTransaction-text style="display:none;color:red;"
+
+javascript:
+
+	// 編集ボタン
+	$(document).on("click", "#edit-purchase-order", function(){
+	  $("#order_details_history_list").hide();
+	  $("#order-price").hide();
+	  $("#edit-purchase-order-history").show();
+	  $("#edit-purchase-order").addClass("md-none-edit-button");
+	  $("#edit-purchase-order").removeClass("md-edit-button");
+	  $("#edit-purchase-order-button").show();
+	  $("#fn-read-deliverdate").hide();
+	  $("#fn-edit-deliverdate").show();
+	});
+
+	// カレンダー
+	$(document).on("ready page:load", function(){
+	  selectDate.init();
+	});
+
+	var selectDate = {
+	  constructor: {
+	    trigger: "#fn-select-date",
+	  },
+	  init: function(){
+	    var self = this;
+	    self.pickDate();
+	  },
+	  pickDate: function(){
+	    var self = this;
+	    var constructor = self.constructor;
+	    $(constructor.trigger).datepicker({
+	      altFormat: "yy/mm/dd",
+	      autoclose: true,
+	      changeMonth: true,
+	      changeYear: true,
+	      minDate: 0,
+	      showButtonPanel : true,
+	      buttonImage: "http://www.freeiconspng.com/uploads/calendar-icon-business-3.png",
+		  buttonText: "選択",
+		  buttonImageOnly: true,
+		  showOn: "button"
+	    });
+
+	    var old_fn = $.datepicker._updateDatepicker;
+		$.datepicker._updateDatepicker = function(inst) {
+		    old_fn.call(this, inst);
+		    var buttonPane = $(this).datepicker("widget").find(".ui-datepicker-buttonpane");
+		    var buttonHtml = "<button type='button' class='ui-datepicker-clean ui-state-default ui-priority-primary ui-corner-all'>クリア</button>";
+		    $(buttonHtml).appendTo(buttonPane).click(
+		      function(ev) {
+		        $.datepicker._clearDate(inst.input);
+		        $(constructor.trigger).val("指定なし");
+		    });
+		}
+	  }
+	}
+

@@ -1,0 +1,18 @@
+- if object.errors.any?
+  #error_explanation
+	ul
+	  - object.errors.full_messages.each do |msg|
+	    li
+          i.fa.fa-exclamation-circle
+          = msg
+
+
+- if object.errors.any?
+	javascript:
+
+			$(document).ready(function() {
+				 var path = location.pathname
+				 if (path == '/orders') {
+					history.pushState('', '', location.href + '/new');
+				 }
+			});

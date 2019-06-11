@@ -1,0 +1,303 @@
+ja:
+  date:
+    formats:
+      default: "%Y/%m/%d"
+      short: "%m/%d"
+      long: "%Y年%m月%d日"
+      day_names: [日曜日, 月曜日, 火曜日, 水曜日, 木曜日, 金曜日, 土曜日]
+    abbr_day_names: [日, 月, 火, 水, 木, 金, 土]
+    month_names: [~, 1月, 2月, 3月, 4月, 5月, 6月, 7月, 8月, 9月, 10月, 11月, 12月]
+    abbr_month_names: [~, 1月, 2月, 3月, 4月, 5月, 6月, 7月, 8月, 9月, 10月, 11月, 12月]
+    order:
+      - :year
+      - :month
+      - :day
+  time:
+    formats:
+      default: "%Y/%m/%d(%a) %H:%M"
+      short: "%y/%m/%d %H:%M"
+      too_short: "%Y/%m/%d(%a)"
+      long: "%Y年%m月%d日(%a) %H時%M分"
+    am: "午前"
+    pm: "午後"
+  number:
+    currency:
+      format:
+        unit: " "
+        format: "¥%n%u"
+        negative_format: "-¥%n%u"
+        precision: 0
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: "1時間前"
+        other: "%{count}時間前"
+      x_minutes:
+        one: "1分前"
+        other: "%{count}分前"
+      x_days:
+        one: "1日前"
+        other: "%{count}日前"
+      x_months:
+        one: "1ヶ月前"
+        other: "%{count}ヶ月前"
+      less_than_x_minutes:
+        one: "0分前"
+      about_x_months:
+        one: "1ヶ月前"
+        other: "%{count}ヶ月前"
+      about_x_years:
+        one: "1年前"
+        other: "%{count}年前"
+      over_x_years:
+        one: "1年前"
+        other: "%{count}年前"
+  order_way:
+    mail: "メール発注"
+    fax: "FAX発注"
+  restaurant:
+    account_type:
+      corporate: 法人
+      solo_proprietorship: 個人事業主
+      personal: 個人
+  company:
+    is_corp:
+      "true": 法人
+      "false": 個人事業主
+  activerecord:
+    order:
+      order_status:
+        not_deliver: "確認中"
+        in_progress: "準備中"
+        already_deliver: "発送済"
+        recieved_products: "納品完了"
+    supplier_bank:
+      bank_type:
+        ordinary_account: "普通"
+        current_account: "当座"
+    supplier:
+      invoice_target_at:
+        created_at: "注文された時点"
+        received_at: "納品完了した時点"
+        already_deliver_at: "発送された時点"
+    product:
+      is_stock:
+        "true": あり
+        "false": なし
+    restaurant:
+      is_payment:
+        "true": あり
+        "false": なし
+    attributes:
+      message/image:
+        content: ""
+      message/message_file:
+        content: ""
+      order:
+        company_id: "取引先"
+        name: "受注名称"
+        postage: "送料"
+      order_details:
+        product_name: "商品名"
+        unit_price: "単価"
+        product_unit: "発注ロット"
+        unit_quantity: "発注ロット数"
+        product_detail_id: product detail
+        quantity: "数量"
+        pre_product_unit: "単位"
+      shipment_address:
+        name: "名前"
+        tel: "電話番号"
+        zipcode1: ""
+        zipcode2: ""
+        state: ""
+        city: ""
+        address1: ""
+      invoice_address:
+        state: ""
+        city: ""
+        address1: ""
+        zipcode1: ""
+        zipcode2: ""
+        mail_address: "請求先メールアドレス"
+      invoice:
+        price: "単価"
+        memo: "備考"
+      supplier_request:
+        name: "ブランド名"
+        mail_address: "メールアドレス"
+        tel: "電話番号"
+        charge_name: "担当者"
+      lp_contact:
+        mail_address: "メールアドレス"
+        tel: "電話番号"
+        charge_name: "担当者"
+        content: "お問い合わせ内容"
+        restaurant_name: "会社名または店舗名"
+        subject: ""
+      invoice_details:
+        name: "商品名"
+        unit_price: "単価"
+        quantity: " 数量"
+      supplier_bank:
+        bank_name: "銀行名"
+        bank_branch: "支店名"
+        bank_holder_name: "口座名義"
+        bank_number: "口座番号"
+      supplier_exchange:
+        exchange_question: "FAQの質問"
+        exchange_answer: "FAQの回答"
+
+    errors:
+      messages:
+        record_invalid: "active record in valid"
+        extension_white_list_error: "%{extension}ファイルのアップロードは許可されていません。アップロードできるファイルタイプ: %{allowed_types}"
+        extension_black_list_error: "%{extension}ファイルのアップロードは許可されていません。アップロードできないファイルタイプ: %{prohibited_types}"
+        rmagick_processing_error: "rmagickがファイルを処理できませんでした。画像を確認してください。エラーメッセージ: %{e}"
+        mime_types_processing_error: "MIME::Typesのファイルを処理できませんでした。Content-Typeを確認してください。エラーメッセージ: %{e}"
+        mini_magick_processing_error: "MiniMagickがファイルを処理できませんでした。画像を確認してください。エラーメッセージ: %{e}"
+      models:
+        order:
+          attributes:
+            company_id:
+              blank: "を選択してください"
+            name:
+              blank: "を入力してください"
+            postage:
+              blank: "を入力してください"
+              not_a_number: "半角数字で入力してください"
+            order_details:
+              blank: "商品を１つ以上選んでください"
+        order_detail:
+          attributes:
+            unit_price:
+              blank: "を入力してください"
+              not_a_number: "は半角数字で入力してください"
+              not_an_integer: "は半角数字で入力してください"
+            product_unit:
+              blank: "を入力してください"
+            unit_quantity:
+              blank: "を入力してください"
+              not_a_number: "半角数字で入力してください"
+            product_detail_id:
+              blank: "を入力してください"
+            order:
+              blank: "pls choosen a restaurant"
+            name:
+              blank: "を入力してください"
+            order_memo:
+              blank: "を入力してください"
+            quantity:
+              blank: "を入力してください"
+              not_a_number: "は半角数字で入力してください"
+              greater_than: "半角英数字で入力してください"
+            pre_product_unit:
+              blank: "を入力してください"
+        message/image:
+          attributes:
+            content:
+              invalid: "画像以外のファイルはアップロードできません"
+              blank: ""
+        message/message_file:
+          attributes:
+            content:
+              invalid: "画像、PDF、Excel、CSV以外のファイルはアップロードできません"
+              blank: ""
+  payment:
+    account_type:
+      "1": 普通
+      "2": 当座
+    AccessID: access id
+    BankCode: 銀行コード
+    BankName: 銀行名
+    BranchCode: 支店コード
+    BranchName: 支店名
+    AccountType: 預金種別
+    AccountNumber: 口座番号
+    AvailableDate: 取引有効期限
+    TradeCode: 振込コード
+  errors:
+    messages:
+      mini_magick_processing_error: "画像以外のファイルはアップロードできません"
+  views:
+    form:
+      label:
+        company:
+          mail_address: "メールアドレス"
+          account_type: "アカウント種別"
+          name: "会社名"
+          name_kana: "会社名フリガナ"
+          address: "住所"
+          postal_code: "郵便番号"
+          state: "都道府県"
+          city: "市区町村"
+          address: "番地"
+          address2: "建物名"
+          tel: "電話番号"
+          user_name: "担当者さまのお名前"
+          memo: "備考"
+          is_corp: "アカウント種別"
+        invoice:
+          address_name: "請求先名"
+          postal_code: "郵便番号"
+          state: "都道府県"
+          city: "市区町村"
+          address1: "番地"
+          address2: "建物名"
+          mail_address: "請求書送付先メールアドレス"
+          tel: "電話番号"
+        shipment_address:
+          name: "納品先名"
+          postal_code: "郵便番号"
+          state: "都道府県"
+          city: "市区町村"
+          address1: "番地"
+          address2: "建物名"
+          tel: "電話番号"
+          user_name: "担当者さまのお名前"
+      placeholder:
+        company:
+          mail_address: "まずはメールアドレスを入力して検索してください"
+          name: "虎ノ門カフェ"
+          name_kana: "トラノモンカフェ"
+          postal_code1: "105"
+          postal_code2: "0001"
+          state: "東京都"
+          city: "港区"
+          address: "虎ノ門1-13-4"
+          address2: "虎ノ門宝寿会館2F"
+          tel: "0368212335"
+          user_name: "迅優一"
+        restaurant:
+          mail_address: "まずはメールアドレスを入力して検索してください"
+          name: "虎ノ門カフェ"
+          name_kana: "トラノモンカフェ"
+          postal_code1: "105"
+          postal_code2: "0001"
+          state: "東京都"
+          city: "港区"
+          address1: "虎ノ門1-13-4"
+          address2: "虎ノ門宝寿会館2F"
+          tel: "0368212335"
+          user_name: "迅優一"
+          memo: "こちらには備考としてメモを残すことができます（店舗には公開されません）"
+        invoice:
+          address_name: "株式会社虎ノ門カフェ"
+          postal_code1: "105"
+          postal_code2: "0001"
+          state: "東京都"
+          city: "港区"
+          address1: "虎ノ門1-13-4"
+          address2: "虎ノ門宝寿会館2F"
+          mail_address: "sample@zineyou.jp"
+          tel: "0368212335"
+        shipment_address:
+          name: "虎ノ門カフェ 渋谷店"
+          postal_code1: "105"
+          postal_code2: "0001"
+          state: "東京都"
+          city: "港区"
+          address1: "虎ノ門1-13-4"
+          address2: "虎ノ門宝寿会館2F"
+          tel: "0368212335"
+          user_name: "迅優一"

@@ -9,15 +9,20 @@
 #  updated_at   :datetime         not null
 
 class OrderDetail < ActiveRecord::Base
-	 belongs_to :order, touch: true
 
-	 validates :product_name, presence: true
-	 validates :unit_price, presence: true
-	 validates :quantity, presence: true
+	belongs_to :order
+
+	validates :product_name, presence: true
+	validates :unit_price, presence: true, numericality: {only_integer: true}, length: {maximum: 10}
+	validates :quantity, presence: true, length: {maximum: 10}
+	validates :quantity, numericality: {greater_than_or_eq: 0}
+	validates :quantity, numericality: {greater_than: 0}
+
+	acts_as_paranoid
 
 	# 合計金額を計算する
 	def calculate_order_detail_price
-	    self.price = unit_price * quantity
+	   	self.price = unit_price * quantity
 	rescue
 	    self.price = 0
 	end

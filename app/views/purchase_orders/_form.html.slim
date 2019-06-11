@@ -1,0 +1,17 @@
+.wrapper.-gray
+  table.-noborderTop
+    thead
+      tr
+        th._widthPercent40
+          | 商品名
+        th._widthPercent25
+          | 単価(税抜)
+        th._widthPercent35
+          | 数量
+
+.wrapper.md-table01-input-table.o-tableDetail__selectBoxInner
+  table.-noborderTop#product_list.resources_data_list
+    = f.fields_for :order_details, f.object.order_details do |b|
+        = render "order_detail_fields", f: b
+.wrapper.md-table01-box-inner.no-border.text-right
+    = link_to_add_association "商品を追加", f, :order_details, class: 'btn btn-add',data: { association_insertion_node: "#product_list",association_insertion_method: "append" }

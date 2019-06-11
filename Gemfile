@@ -41,14 +41,26 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'will_paginate',           '3.1.7'
 gem 'bootstrap-will_paginate', '1.0.0'
 
+gem 'better_errors'
+gem 'binding_of_caller'
+
+
 gem "ransack", '~> 2.1'
 
 # Slim
 gem 'html2slim'
 gem 'slim-rails'
 
-#gem "nested_form"
+gem "nested_form"
 gem 'cocoon'
+
+gem 'rails-i18n', '~> 5.1'
+
+gem 'font-awesome-rails'
+
+gem "magnific-popup-rails"
+
+gem "paranoia"
 
 
 # Use jquery as the JavaScript library

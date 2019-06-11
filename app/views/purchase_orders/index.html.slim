@@ -1,0 +1,11 @@
+- provide(:title, "注文書一覧")
+
+h1 注文書一覧
+
+.row
+
+	= will_paginate
+
+	= render "purchase_orders"
+
+	= will_paginate

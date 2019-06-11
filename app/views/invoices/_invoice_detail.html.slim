@@ -1,0 +1,8 @@
+- @invoices.each do |invoice|
+  li.o-table__head__flex.fn-each-invoice-list#invoice_list data-invoice-id="#{invoice.company_id}" data-href="#{invoice_path(invoice.company_id)}"
+    .o-table__data__invoice = "##{invoice.company.id}"
+    .o-table__data__invoice = invoice.company.name
+    .o-table__data__invoice#index-invoice-price &yen#{number_with_delimiter invoice.total_invoice_price}
+    .o-table__data__invoice = invoice.count
+    .o-table__data__invoice = l Date.parse(invoice.updated_at.to_s)
+    .o-table__data__invoice 2019/7/31

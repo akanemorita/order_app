@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
   root 'orders#index'
-  #get 'orders/new'
 
-  resources :orders,     only: [:new, :create, :edit, :update]
-  resources :purchase_orders
-  resources :invoices
+  resources :orders, only: %i(new create update) do
+    put :update_shipment_status, on: :collection
+  end
+
+  resources :purchase_orders, only: %i(index show update destroy)
+  resources :invoices, only: %i(index show)
 end

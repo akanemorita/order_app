@@ -1,0 +1,11 @@
+- provide(:title, "請求書一覧")
+
+h1 請求書一覧
+
+.row
+
+	= will_paginate
+
+	= render 'invoice_list'
+
+	= will_paginate

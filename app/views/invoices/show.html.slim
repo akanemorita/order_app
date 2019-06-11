@@ -1,0 +1,141 @@
+- provide(:title, "請求書詳細")
+
+.row
+
+  section#fn-invoice-detail.p-invoiceDetail
+    .md-table01-box
+        .md-table01-header-flex-inner
+          .md-table01-back-wrap
+            = link_to '請求書一覧', invoices_path
+        .md-invoice01-box
+          .md-invoices01-wrap
+            .md-invoice01-ttl-box
+              h1 請求書
+              .md-invoice01-left-box
+                h3
+                  | 〒#{@company.zipcode1}-#{@company.zipcode2}
+                  br
+                  | #{@company.state}#{@company.city}#{@company.address}#{@company.address2}
+                h2 #{@company.name} 御中
+                p 下記の通りご請求申し上げます。
+                dl.ex-sub
+                  dt.ex-sub
+                    span 請求番号
+                  dd.ex-sub
+                    span.js-update-invoice-code #{@company.id}-201906
+                dl.ex-sub.ex-right
+                  dt.ex-sub
+                    span 発行日
+                  dd.ex-sub
+                    span
+                      | 2019/06/10
+                dl
+                  dt.ex-sum
+                    span 合計金額
+                    span
+                      | (税込)
+                  - @invoices_prices.each do |invoice_price|
+                    dd
+                      span.f26 &yen#{number_with_delimiter invoice_price.invoice_all_price}
+                dl
+                  dt
+                    span 支払期限
+                  dd
+                    span.invoice_expires_at
+                      | 2019/7/31
+                dl
+                  dt
+                    span 請求対象
+                  dd
+                    span
+                      | 2019年6月分(2019/06/01 ~ 2019/06/30)
+
+                dl
+                  dt
+                    span 振込先
+                  dd
+                    span
+                      | りそな銀行　虎ノ門支店　株式会社ANTI HERO
+                    br
+                      |（普通）699543
+              .md-invoice01-right-box
+                dl
+                  dt
+                    | 販売元
+                  dd
+                    ul
+                      li.f15 株式会社ANTI HERO SK
+                      li 〒153-0051
+                      li 東京都港区虎ノ門虎ノ門ヒルズ 2-1-3
+                      li TEL：03-6412-8683
+                      li MAIL：anti-hero-sk@gmail.com
+                dl
+                  dt
+                    | 請求元
+                  dd
+                    ul
+                      li.f15 株式会社ANTI HERO SK
+                      li 〒153-0051
+                      li 東京都港区虎ノ門虎ノ門ヒルズ 2-1-3
+                      li TEL：03-6412-8683
+                      li MAIL：anti-hero-sk@gmail.com
+            .md-invoice01-table-box#js-invoice-table-by-order style="display: block"
+                table.md-invoice01-table-by-order
+                  thead
+                    tr
+                      th
+                        | 注文日
+                      th
+                        | 商品名
+                      th
+                        | 価格(税抜)
+                      th
+                        | 数量
+                      th
+                        | 小計(税抜)
+                  tbody
+                  - @invoices.each do |invoice|
+                    - invoice.order_details.each do |detail|
+                      tr
+                        td
+                          | #{l detail.created_at, format: '%Y/%m/%d' }
+                        td
+                          | #{detail.product_name}
+                        td
+                          | &yen#{number_with_delimiter detail.unit_price}
+                        td
+                          | #{detail.quantity}
+                          - detail_price = detail.unit_price * detail.quantity
+                        td
+                          | &yen#{number_with_delimiter detail_price}
+                    tr
+                      td
+                      td
+                        | 送料
+                      td
+                      td
+                      td
+                        | &yen#{number_with_delimiter invoice.postage}
+            - @invoices_prices.each do |invoice_price|
+              .md-invoice01-table-bottom-box
+                  dl
+                    dt
+                      | 小計
+                    dd
+                      | &yen#{number_with_delimiter invoice_price.total_invoice_price}
+                  dl
+                    dt
+                      | 送料合計
+                    dd
+                      | &yen#{number_with_delimiter invoice_price.total_invoice_postage}
+                  dl
+                    dt
+                      | 消費税
+                    dd
+                      | &yen#{number_with_delimiter invoice_price.total_invoice_tax_price.to_i}
+                  dl
+                    dt.ex-sum 合計
+                    dd.ex-sum &yen#{number_with_delimiter invoice_price.invoice_all_price}
+            .md-invoice01-table-bottom-box
+              .md-invoice01-bottom-comment
+               p ※#{@company.name}様 発注分

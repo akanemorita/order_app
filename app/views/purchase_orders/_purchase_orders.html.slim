@@ -1,0 +1,34 @@
+
+section.p-purchase-order-histories-index
+
+	.o-table
+	- if @purchase_orders.any?
+      	.o-table__inner
+          	ul.no-padding-mergin
+	            li.o-table__head__flex
+	              .o-table__flexLabel 注文番号
+	              .o-table__flexLabel.-second 注文日
+	              .o-table__flexLabel　取引先名
+	              .o-table__flexLabel　注文名称
+	              .o-table__flexLabel
+	                = "注文金額(税込)"
+				.resources_data_list
+					= render "purchase_histories"
+	- else
+      	.o-table__blank
+        	h2 注文書がないよ！
+        	p まずは発注書を作成してみようね！
+
+
+
+javascript:
+	$(function() {
+
+	    $(this).find('li').click( function() {
+	    	var href_link = $(this).attr('id');
+	    	if (href_link == 'purchase_order_list') {
+				window.location = $(this).attr('data-href');
+	    	}
+	    });
+
+	});
