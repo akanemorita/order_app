@@ -62,7 +62,6 @@ gem "magnific-popup-rails"
 
 gem "paranoia"
 
-
 # Use jquery as the JavaScript library
 gem "jquery-rails"
 gem 'jquery-ui-rails'

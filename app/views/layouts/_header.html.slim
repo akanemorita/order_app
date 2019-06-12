@@ -1,10 +1,11 @@
 header.navbar.navbar-fixed-top.navbar-inverse
   .container
     = link_to "簡易注文システム_(:3」∠)_", root_path, id: "logo"
+    p#company_name for 株式会社ANTI HERO SK
     nav
       ul.nav.navbar-nav.navbar-right
       	li
-          = link_to "発注書作成", new_order_path
+          = link_to "注文書作成", new_order_path
         li
           = link_to "注文一覧", purchase_orders_path
         li

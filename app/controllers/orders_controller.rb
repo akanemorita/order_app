@@ -28,19 +28,19 @@ class OrdersController < ApplicationController
   end
 
   # 配送状況の更新
-  def update
-    @order = Order.find_by id: params[:id]
-    respond_to do |format|
-      if @order.update params[:orders][:order_status]
-      #if @order.public_send params[:orders][:order_status]
-        format.json do
-          render json: {id: @order.id, order_status: @order.order_status, selectbox: @order.select_order_status}
-        end
-      else
-        format.json{render json: {errors: @order.errors.full_messages}}
-      end
-    end
-  end
+  #def update
+  #  @order = Order.find_by id: params[:id]
+  #  respond_to do |format|
+  #    if @order.update params[:orders][:order_status]
+  #    #if @order.public_send params[:orders][:order_status]
+  #      format.json do
+  #        render json: {id: @order.id, order_status: @order.order_status, selectbox: @order.select_order_status}
+  #      end
+  #    else
+  #      format.json{render json: {errors: @order.errors.full_messages}}
+  #    end
+  #  end
+  #end
 
   private
 
